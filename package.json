@@ -1,6 +1,6 @@
 {
 	"name": "wx-lib-data-provider",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"main": "./dist/provider-lib.umd.js",
 	"module": "./dist/provider-lib.es.js",
 	"types": "./dist/types/index.d.ts",
