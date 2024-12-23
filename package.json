@@ -1,6 +1,6 @@
 {
 	"name": "wx-lib-data-provider",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"main": "./dist/provider-lib.umd.js",
 	"module": "./dist/provider-lib.es.js",
 	"types": "./dist/types/index.d.ts",
@@ -30,6 +30,13 @@
 		"readme.md",
 		"whatsnew.md"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/svar-widgets/lib-data-provider"
+	},
+	"bugs": {
+		"url": "https://forum.svar.dev"
+	},
 	"devDependencies": {
 		"wx-lib-state": "^1.9.0",
 		"@vitest/coverage-v8": "2.1.1",

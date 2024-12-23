@@ -1,3 +1,7 @@
+### 1.5.0
+
+- [add] RestURL helper
+
 ### 1.4.0
 
 - [dev] initial public release
