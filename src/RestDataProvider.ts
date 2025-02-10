@@ -1,15 +1,27 @@
 import { EventBus } from "wx-lib-state";
 import ActionQueue from "./ActionQueue";
-import type { ActionMap, SkipProviderEvent } from "./types";
+import type {
+	ActionMap,
+	RestDataProviderConfig,
+	SkipProviderEvent,
+} from "./types";
 
 export default class Rest<T> extends EventBus<T, keyof T> {
 	private _queue: ActionQueue;
 	private _customHeaders: Record<string, string> = {};
 	protected _url: string;
+	protected _batchUrl?: string;
+	private _batchQueue: Array<{
+		url: string;
+		method: string;
+		data: object;
+	}> = [];
+	private _batchTimeout: number | null = null;
 
-	constructor(url?: string) {
+	constructor(url?: string, config?: Partial<RestDataProviderConfig>) {
 		super();
 		this._url = url as string;
+		this._batchUrl = config?.batchURL;
 
 		this._queue = new ActionQueue();
 		const handlers = this.getHandlers();
@@ -31,7 +43,67 @@ export default class Rest<T> extends EventBus<T, keyof T> {
 	getQueue(): ActionQueue {
 		return this._queue;
 	}
-	send<T>(
+	async send<T>(
+		url: string,
+		method: string,
+		data?: object,
+		customHeaders: Record<string, string> = {}
+	): Promise<T> {
+		if (this._batchUrl && method !== "GET") {
+			return this.sendBatchRequest(url, method, data, customHeaders);
+		} else {
+			return this.sendRequest(url, method, data, customHeaders);
+		}
+	}
+
+	private async sendBatchRequest<T>(
+		url: string,
+		method: string,
+		data?: object,
+		customHeaders?: Record<string, string>
+	): Promise<T> {
+		this._batchQueue.push({ url, method, data });
+
+		if (this._batchTimeout) {
+			clearTimeout(this._batchTimeout);
+		}
+
+		return new Promise<T>(resolve => {
+			this._batchTimeout = setTimeout(async () => {
+				if (this._batchQueue.length > 1) {
+					const batchData = this._batchQueue.map(req => {
+						return {
+							url: req.url,
+							method: req.method,
+							data: {
+								...req.data,
+							},
+						};
+					});
+
+					this._batchQueue = [];
+
+					const result = await this.sendRequest<T>(
+						this._batchUrl!,
+						"POST",
+						batchData
+					);
+					resolve(result);
+				} else {
+					this._batchQueue = [];
+					const result = await this.sendRequest<T>(
+						url,
+						method,
+						data,
+						customHeaders
+					);
+					resolve(result);
+				}
+			}, 10);
+		});
+	}
+
+	protected async sendRequest<T>(
 		url: string,
 		method: string,
 		data?: string | object,
@@ -51,6 +123,10 @@ export default class Rest<T> extends EventBus<T, keyof T> {
 			req.body = typeof data === "object" ? JSON.stringify(data) : data;
 		}
 
-		return fetch(`${this._url}${url || ""}`, req).then(res => res.json());
+		const slash = this._url.charAt(-1) === "/" || url[0] === "/" ? "" : "/";
+
+		return fetch(`${this._url}${slash}${url || ""}`, req).then(res =>
+			res.json()
+		);
 	}
 }

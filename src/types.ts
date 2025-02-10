@@ -27,6 +27,9 @@ export type HandlerConfig = {
 
 export type DataProviderConfig = { [key: string]: HandlerConfig | Handler };
 
+export type RestDataProviderConfig = {
+	batchURL?: string;
+};
 export type TID = string | number;
 export interface AddResponse {
 	id: TID;

@@ -1,3 +1,11 @@
+### 1.6.0
+
+- [add] batch mode for rest data provider
+
+### 1.5.2
+
+- [update] RestURL API ( path, headers )
+
 ### 1.5.1
 
 - [add] RestURL helper
