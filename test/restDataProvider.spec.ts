@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import RestDataProvider from "../src/RestDataProvider";
 
 describe("RestDataProvider", () => {
-	let provider: RestDataProvider<any>;
+	let provider: RestDataProvider<Record<string, string>>;
 	const testUrl = "http://mockapi.com";
 	const testBatchUrl = "/batch";
 

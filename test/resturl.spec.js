@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { tempID } from "wx-lib-state";
+import { tempID } from "@svar-ui/lib-state";
 import { RestURL } from "../src/index";
 
 function getMock(url, log) {

@@ -1,5 +1,5 @@
 import { DataObj, TID, HandlerConfig, ServerResponse } from "./types";
-import { isTempID } from "wx-lib-state";
+import { isTempID } from "@svar-ui/lib-state";
 
 const cantSendYet = Symbol();
 
@@ -205,16 +205,16 @@ export default class ActionQueue {
 					}
 					copy[key] = after;
 				}
-			} else if (test !== ignore && isTempID(test)) {
+			} else if (isTempID(test)) {
 				const hasRealID = this._idPool[test];
-				if (!hasRealID) {
+				if (hasRealID) {
+					if (copy === null) {
+						copy = { ...obj };
+					}
+					copy[key] = hasRealID;
+				} else if (!ignore) {
 					return cantSendYet;
 				}
-
-				if (copy === null) {
-					copy = { ...obj };
-				}
-				copy[key] = hasRealID;
 			}
 		}
 

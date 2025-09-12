@@ -1,3 +1,12 @@
+### 1.7.1
+
+- [dev] toolchain updated to tsup
+
+### 1.7.0
+
+- [fix] incorrect promise/ID resolution for batch operations
+- [fix] incorrect ID substitutions for insert operations
+
 ### 1.6.0
 
 - [add] batch mode for rest data provider

@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { ActionQueue, SYNC, NOTSENT } from "../src/index";
-import { tempID } from "wx-lib-state";
+import { tempID } from "@svar-ui/lib-state";
 
 let sum;
 const handler = ev => {
@@ -18,7 +18,7 @@ const rejected = () => {
 
 test("constructor", () => {
 	const q = new ActionQueue();
-	expect(q).is.not.undefined;
+	expect(q).toBeDefined();
 });
 
 test("add", async () => {

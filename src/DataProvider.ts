@@ -1,4 +1,4 @@
-import { EventBus } from "wx-lib-state";
+import { EventBus } from "@svar-ui/lib-state";
 import ActionQueue from "./ActionQueue";
 import type { DataProviderConfig, SkipProviderEvent } from "./types";
 

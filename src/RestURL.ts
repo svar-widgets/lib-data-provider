@@ -1,5 +1,5 @@
-import type { TID } from "wx-lib-state";
-import { isTempID } from "wx-lib-state";
+import type { TID } from "@svar-ui/lib-state";
+import { isTempID } from "@svar-ui/lib-state";
 
 function _addToUrl(url: string, ...parts: TID[]) {
 	if (!parts.length) return url;

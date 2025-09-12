@@ -18,7 +18,7 @@ function getProvider() {
 
 test("constructor", () => {
 	const q = new DataProvider({});
-	expect(q).is.not.undefined;
+	expect(q).toBeDefined();
 });
 
 test("async events", async () => {
