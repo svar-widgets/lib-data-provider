@@ -1,3 +1,7 @@
+### 1.7.2
+
+- [fix] trailing slash in base url
+
 ### 1.7.1
 
 - [dev] toolchain updated to tsup

@@ -11,4 +11,5 @@ export default defineConfig({
 	outDir: "dist",
 	splitting: false,
 	treeshake: true,
+	external: ["@svar-ui/lib-state"],
 });

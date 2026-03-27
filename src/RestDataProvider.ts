@@ -132,7 +132,7 @@ export default class Rest<T> extends EventBus<T, keyof T> {
 			req.body = typeof data === "object" ? this.toPayload(data) : data;
 		}
 
-		const slash = this._url.charAt(-1) === "/" || url[0] === "/" ? "" : "/";
+		const slash = !url || this._url.endsWith("/") || url[0] === "/" ? "" : "/";
 
 		return fetch(`${this._url}${slash}${url || ""}`, req).then(res =>
 			res.json()
